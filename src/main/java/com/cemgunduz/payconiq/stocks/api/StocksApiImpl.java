@@ -7,6 +7,7 @@ import com.cemgunduz.payconiq.stocks.api.model.Stock;
 import com.cemgunduz.payconiq.stocks.persistence.StockDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  * Implementation class for the Stocks Api.
  */
 @RestController
+@Transactional
 public class StocksApiImpl implements StocksApi {
 
     @Autowired

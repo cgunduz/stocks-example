@@ -1,6 +1,7 @@
 package com.cemgunduz.payconiq.stocks.api.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;

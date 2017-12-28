@@ -1,6 +1,7 @@
 package com.cemgunduz.payconiq.stocks.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
+@Builder
 public class StockInput {
 
     private String name;
@@ -19,4 +21,6 @@ public class StockInput {
 
     // TODO : Timestamp demis ama ?
     private Long lastUpdate;
+
+    // TODO : Buraya validator eklenmeli mi ?
 }
