@@ -1,11 +1,9 @@
 package com.cemgunduz.payconiq.stocks.api.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Created by cem on 26/12/17.
