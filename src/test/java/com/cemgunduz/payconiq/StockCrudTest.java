@@ -1,5 +1,6 @@
 package com.cemgunduz.payconiq;
 
+import com.cemgunduz.payconiq.exception.BadRequestException;
 import com.cemgunduz.payconiq.exception.StockNotFoundException;
 import com.cemgunduz.payconiq.stocks.api.StocksApiImpl;
 import com.cemgunduz.payconiq.stocks.api.model.Stock;
@@ -21,10 +22,9 @@ import java.util.UUID;
 
 /**
  * Created by cem on 27/12/17.
- * <p>
+ *
  * Test coverage for the Stock Api
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("it")
 @SpringBootTest(classes = {StocksApplication.class})
@@ -58,6 +58,22 @@ public class StockCrudTest {
         List<Stock> stocks = stocksApi.getStocks();
         Assert.assertEquals(stocks.size(), 1);
         Assert.assertEquals(stocks.get(0).getName(), TEST_STOCK_NAME);
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void saveInvalidPrice() {
+
+        StockInput stockInput = createStock(TEST_STOCK_NAME);
+        stockInput.setCurrentPrice(new BigDecimal(-1));
+        stocksApi.postStocks(stockInput);
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void saveInvalidTimestamp() {
+
+        StockInput stockInput = createStock(TEST_STOCK_NAME);
+        stockInput.setLastUpdate(22514460919123L);
+        stocksApi.postStocks(stockInput);
     }
 
     @Test(expected = StockNotFoundException.class)

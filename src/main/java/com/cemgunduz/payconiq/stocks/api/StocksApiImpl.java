@@ -50,8 +50,9 @@ public class StocksApiImpl implements StocksApi {
     @Override
     public Stock updateStocksById(@PathVariable Long stockId, @RequestBody @Valid StockInput stockInput) {
 
-        StockDto detachedStock = findById(stockId);
+        stockInput.validate();
 
+        StockDto detachedStock = findById(stockId);
         modelMapper.map(stockInput, detachedStock);
         stockDao.save(detachedStock);
 
@@ -61,13 +62,14 @@ public class StocksApiImpl implements StocksApi {
     @Override
     public Long postStocks(@RequestBody @Valid StockInput stockInput) {
 
+        stockInput.validate();
+
         StockDto stockDto = modelMapper.map(stockInput, StockDto.class);
         return stockDao.save(stockDto).getId();
     }
 
     private StockDto findById(Long stockId)
     {
-        // TODO : Duzeltmek lazim
         StockDto stockDto = stockDao.getOne(stockId);
         try{
             stockDto.getId();

@@ -7,8 +7,9 @@ import java.math.BigDecimal;
 
 /**
  * Created by cem on 26/12/17.
+ *
+ * Dto form of stock model.
  */
-
 @Data
 @Entity
 @Table(name = "stock")
