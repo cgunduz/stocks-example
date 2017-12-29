@@ -15,7 +15,7 @@ mvn spring-boot:run
 * Added liquibase and turned off the jpa auto ddl properties for early control and easier migration to real databases.
 * Separated the test and application context early on, because that would definitely be needed going forward.
 * Added swagger support which is available under: http://localhost:8080/swagger-ui.html
-
+* Added a postman collection for ease of testing. It makes its queries to the default server location localhost:8080 so please do change the url if you start the server elsewhere.
 
 # Future changes
 
