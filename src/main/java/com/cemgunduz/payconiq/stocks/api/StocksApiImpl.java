@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -70,16 +71,9 @@ public class StocksApiImpl implements StocksApi {
 
     private StockDto findById(Long stockId)
     {
-        StockDto stockDto = stockDao.getOne(stockId);
-        try{
-            stockDto.getId();
-        }
-        catch (EntityNotFoundException e) {
-            throw new StockNotFoundException("The requested stock with the given id : "
-                    .concat(stockId.toString())
-                    .concat(" is not found"));
-        }
-
-        return stockDto;
+        return Optional.ofNullable(stockDao.findOne(stockId)).orElseThrow(() ->
+                new StockNotFoundException("The requested stock with the given id : "
+                        .concat(stockId.toString())
+                        .concat(" is not found")));
     }
 }
