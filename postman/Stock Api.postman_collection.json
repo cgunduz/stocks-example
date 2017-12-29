@@ -1,0 +1,91 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Stock Api",
+		"_postman_id": "8ddb83cf-2285-18e4-8892-9c38375e8803",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Stocks",
+			"request": {
+				"url": "http://localhost:8080/stocks/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Ripple-altered-2\",\n\t\"currentPrice\": 123123,\n    \"lastUpdate\": 12345\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Stocks by id",
+			"request": {
+				"url": "http://localhost:8080/stocks/1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Ripple-altered-2\",\n\t\"currentPrice\": 123123,\n    \"lastUpdate\": 12345\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Post Stocks",
+			"request": {
+				"url": "http://localhost:8080/stocks/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Neo\",\n\t\"currentPrice\": 65.45,\n    \"lastUpdate\": 1514460919\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update Stocks",
+			"request": {
+				"url": "http://localhost:8080/stocks/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Bitcoin-altered-name\",\n\t\"currentPrice\": 11326.25,\n    \"lastUpdate\": 1514460919\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
