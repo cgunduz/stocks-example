@@ -46,7 +46,7 @@ public class StockCrudTest {
 
     @Test
     public void fetch() {
-        List<Stock> stockList = stocksApi.getStocks();
+        List<Stock> stockList = stocksApi.getStocks(0,10);
         Assert.assertTrue(stockList.size() == 0);
     }
 
@@ -55,7 +55,7 @@ public class StockCrudTest {
 
         postTestStock();
 
-        List<Stock> stocks = stocksApi.getStocks();
+        List<Stock> stocks = stocksApi.getStocks(0,10);
         Assert.assertEquals(stocks.size(), 1);
         Assert.assertEquals(stocks.get(0).getName(), TEST_STOCK_NAME);
     }
@@ -85,7 +85,7 @@ public class StockCrudTest {
     public void getById() {
         String newStockName = "TestStock";
         StockInput transientStock = createStock(newStockName);
-        Long id = stocksApi.postStocks(transientStock);
+        Long id = stocksApi.postStocks(transientStock).getId();
 
         Stock detachedStock = stocksApi.getStockById(id);
         Assert.assertEquals(transientStock.getName(), detachedStock.getName());
@@ -116,7 +116,7 @@ public class StockCrudTest {
 
     private Long postTestStock() {
         StockInput stockInput = createStock(TEST_STOCK_NAME);
-        return stocksApi.postStocks(stockInput);
+        return stocksApi.postStocks(stockInput).getId();
     }
 
     private StockInput createStock(String stockName) {

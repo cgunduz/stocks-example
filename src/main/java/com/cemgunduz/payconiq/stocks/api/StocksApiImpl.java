@@ -7,9 +7,13 @@ import com.cemgunduz.payconiq.stocks.api.model.Stock;
 import com.cemgunduz.payconiq.stocks.persistence.StockDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityNotFoundException;
@@ -20,7 +24,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by cem on 26/12/17.
- *
+ * <p>
  * Implementation class for the Stocks Api.
  */
 @RestController
@@ -34,10 +38,12 @@ public class StocksApiImpl implements StocksApi {
     private ModelMapper modelMapper;
 
     @Override
-    public List<Stock> getStocks() {
+    public List<Stock> getStocks(@RequestParam(value = "from", required = false, defaultValue = "0") Integer from,
+                                 @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
 
-        return stockDao.findAll().stream()
-                .map(stockDto-> modelMapper.map(stockDto, Stock.class))
+        PageRequest pageRequest = new PageRequest(from, size);
+        return stockDao.findAll(pageRequest).getContent().stream()
+                .map(stockDto -> modelMapper.map(stockDto, Stock.class))
                 .collect(Collectors.toList());
     }
 
@@ -61,16 +67,15 @@ public class StocksApiImpl implements StocksApi {
     }
 
     @Override
-    public Long postStocks(@RequestBody @Valid StockInput stockInput) {
+    public Stock postStocks(@RequestBody @Valid StockInput stockInput) {
 
         stockInput.validate();
 
         StockDto stockDto = modelMapper.map(stockInput, StockDto.class);
-        return stockDao.save(stockDto).getId();
+        return modelMapper.map(stockDao.save(stockDto), Stock.class);
     }
 
-    private StockDto findById(Long stockId)
-    {
+    private StockDto findById(Long stockId) {
         return Optional.ofNullable(stockDao.findOne(stockId)).orElseThrow(() ->
                 new StockNotFoundException("The requested stock with the given id : "
                         .concat(stockId.toString())

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Created by cem on 26/12/17.
- *
+ * <p>
  * Stock api that currently allows users to view, create and update stocks.
  * Follows restful conventions and acts as an entrypoint for stock related crud operations
  */
@@ -20,19 +20,25 @@ public interface StocksApi {
 
     /**
      * Method used to retrieve all the stocks in the system
+     * Has pagination support with from and size
      *
+     * @param from Beginning index of the get operation
+     * @param size the total count of stocks that is going to be fetched
      * @return List<Stock>
      */
     @RequestMapping(method = {RequestMethod.GET}, produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
-    List<Stock> getStocks();
+    List<Stock> getStocks(@RequestParam(value = "from", required = false, defaultValue = "0")
+                                  Integer from,
+                          @RequestParam(value = "size", required = false, defaultValue = "10")
+                                  Integer size);
 
     /**
      * Method used to retrieve single stock by id
      *
-     * @exception com.cemgunduz.payconiq.exception.StockNotFoundException if no stock with given id is found
      * @param stockId Numeric id of the stock
      * @return Stock
+     * @throws com.cemgunduz.payconiq.exception.StockNotFoundException if no stock with given id is found
      */
     @RequestMapping(method = {RequestMethod.GET}, value = {"/{stockId}"}, produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
@@ -41,10 +47,10 @@ public interface StocksApi {
     /**
      * Method used to update the information of a single stock by id
      *
-     * @exception com.cemgunduz.payconiq.exception.StockNotFoundException if no stock with given id is found
-     * @param stockId Numeric id of the stock
+     * @param stockId    Numeric id of the stock
      * @param stockInput Changeset of the stock information
      * @return Stock
+     * @throws com.cemgunduz.payconiq.exception.StockNotFoundException if no stock with given id is found
      */
     @RequestMapping(method = {RequestMethod.PUT}, value = {"/{stockId}"}, produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
@@ -58,5 +64,5 @@ public interface StocksApi {
      */
     @RequestMapping(method = {RequestMethod.POST}, produces = {"application/json"})
     @ResponseStatus(HttpStatus.CREATED)
-    Long postStocks(@RequestBody @Valid StockInput stockInput);
+    Stock postStocks(@RequestBody @Valid StockInput stockInput);
 }
