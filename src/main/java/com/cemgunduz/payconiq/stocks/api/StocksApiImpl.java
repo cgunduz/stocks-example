@@ -4,7 +4,7 @@ import com.cemgunduz.payconiq.stocks.api.model.StockInput;
 import com.cemgunduz.payconiq.exception.StockNotFoundException;
 import com.cemgunduz.payconiq.stocks.persistence.StockDao;
 import com.cemgunduz.payconiq.stocks.api.model.Stock;
-import com.cemgunduz.payconiq.stocks.persistence.StockDto;
+import com.cemgunduz.payconiq.stocks.persistence.StockEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -47,8 +47,8 @@ public class StocksApiImpl implements StocksApi {
     @Override
     public Stock getStockById(@PathVariable Long stockId) {
 
-        StockDto stockDto = findById(stockId);
-        return modelMapper.map(stockDto, Stock.class);
+        StockEntity stockEntity = findById(stockId);
+        return modelMapper.map(stockEntity, Stock.class);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class StocksApiImpl implements StocksApi {
 
         stockInput.validate();
 
-        StockDto detachedStock = findById(stockId);
+        StockEntity detachedStock = findById(stockId);
         modelMapper.map(stockInput, detachedStock);
         stockDao.save(detachedStock);
 
@@ -68,11 +68,11 @@ public class StocksApiImpl implements StocksApi {
 
         stockInput.validate();
 
-        StockDto stockDto = modelMapper.map(stockInput, StockDto.class);
-        return modelMapper.map(stockDao.save(stockDto), Stock.class);
+        StockEntity stockEntity = modelMapper.map(stockInput, StockEntity.class);
+        return modelMapper.map(stockDao.save(stockEntity), Stock.class);
     }
 
-    private StockDto findById(Long stockId) {
+    private StockEntity findById(Long stockId) {
         return Optional.ofNullable(stockDao.findOne(stockId)).orElseThrow(() ->
                 new StockNotFoundException("The requested stock with the given id : "
                         .concat(stockId.toString())

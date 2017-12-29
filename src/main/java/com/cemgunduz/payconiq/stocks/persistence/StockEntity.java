@@ -8,12 +8,12 @@ import java.math.BigDecimal;
 /**
  * Created by cem on 26/12/17.
  *
- * Dto form of stock model.
+ * Entity form of stock model.
  */
 @Data
 @Entity
 @Table(name = "stock")
-public class StockDto {
+public class StockEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

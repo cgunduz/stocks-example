@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * Standart spring jpa repository for stock crud operations
  */
-public interface StockDao extends JpaRepository<StockDto, Long> {
+public interface StockDao extends JpaRepository<StockEntity, Long> {
 }
